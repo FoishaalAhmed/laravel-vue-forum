@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class PostFactory extends Factory
         return [
             'user_id' => User::factory(),
             'title' => str(fake()->sentence())->beforeLast('.')->title(),
-            'content' => fake()->realText(600)
+            'content' => Collection::times(5, fn() => fake()->realText(1250))->implode("\n\n")
         ];
     }
 }

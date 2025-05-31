@@ -17,7 +17,7 @@ class PostController extends Controller
         // return PostResource::collection(Post::paginate());
 
         return Inertia::render('Posts/Index', [
-            'posts' => PostResource::collection(Post::paginate())
+            'posts' => PostResource::collection(Post::with('user')->paginate())
         ]);
     }
 
@@ -40,9 +40,13 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        $post->load('user');
+
+        return Inertia::render('Posts/Show', [
+            'post' => PostResource::make($post)
+        ]);
     }
 
     /**
